@@ -1,6 +1,6 @@
 
 import Link from "next/link";
-
+export const instant = false
 interface NavProps {
   slug: string;
   title: string;

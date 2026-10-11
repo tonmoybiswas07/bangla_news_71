@@ -1,7 +1,9 @@
+
 import type { Metadata } from "next";
 import {  Noto_Serif_Bengali } from "next/font/google";
 import "./globals.css";
 import Header from "./components/shared/Header/Header";
+
 
 const NotoSerifBengali = Noto_Serif_Bengali({
   

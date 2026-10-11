@@ -1,5 +1,6 @@
 import MarqueeText from "react-marquee-text";
 import "react-marquee-text/dist/styles.css";
+
 interface Headline {
   id: string;
   title: string;
