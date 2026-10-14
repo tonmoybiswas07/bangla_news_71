@@ -3,6 +3,8 @@ import { Suspense } from "react";
 import NavLink from "./NavLink";
 import HeaderDate from "./HeaderDate";
 
+import UserInfo from "../../userInfo/UserInfo";
+
 const Header = () => {
   return (
     <div className="container mx-auto">
@@ -20,10 +22,7 @@ const Header = () => {
             </Suspense>
           </div>
         </div>
-        <div className="flex gap-3">
-          <button className="btn">সাইন ইন</button>
-          <button className="btn bg-red-600 text-white">সাইন আপ</button>
-        </div>
+        <UserInfo/>
       </div>
       <NavLink />
     </div>

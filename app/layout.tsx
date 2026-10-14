@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import {  Noto_Serif_Bengali } from "next/font/google";
 import "./globals.css";
 import Header from "./components/shared/Header/Header";
+import { ToastContainer } from "react-toastify";
 
 
 const NotoSerifBengali = Noto_Serif_Bengali({
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col ">
         <Header/>
         {children}
+           <ToastContainer />
         </body>
     </html>
   );
