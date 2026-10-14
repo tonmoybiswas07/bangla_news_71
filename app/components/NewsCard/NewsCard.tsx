@@ -1,5 +1,6 @@
 
 import Image from "next/image";
+import Link from "next/link";
 
 interface Article {
   id: string | number;
@@ -16,7 +17,7 @@ interface NewsCardProps {
 
 const NewsCard = ({ sec }: NewsCardProps) => {
   return (
-    <article className="group overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+    <Link href={`/newsdetails/${sec.id}`}><article className="group overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg">
       {/* News Image */}
       <div className="relative aspect-[16/9] w-full overflow-hidden">
         <Image
@@ -63,7 +64,7 @@ const NewsCard = ({ sec }: NewsCardProps) => {
           <time>{sec.lastPublished}</time>
         </div>
       </div>
-    </article>
+    </article></Link>
   );
 };
 

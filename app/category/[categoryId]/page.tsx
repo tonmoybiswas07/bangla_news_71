@@ -1,4 +1,5 @@
 import NewsCard from "@/app/components/NewsCard/NewsCard";
+export const instant = false
 
 interface News{
     id: string | number;

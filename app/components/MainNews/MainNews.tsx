@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 interface Article {
   id: string | number;
@@ -38,7 +39,7 @@ const MainNews = ({ articles }: MainNewsProps) => {
       {/* News Layout */}
       <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-2">
         {/* Featured News */}
-        <article className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition hover:shadow-md">
+        <Link href={`/newsdetails/${firstArticle.id}`} className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition hover:shadow-md">
           <div className="relative aspect-[16/9] w-full overflow-hidden">
             <Image
               src={firstArticle.imageUrl}
@@ -83,7 +84,7 @@ const MainNews = ({ articles }: MainNewsProps) => {
               <time>{firstArticle.lastPublished}</time>
             </div>
           </div>
-        </article>
+        </Link>
 
         {/* Other News */}
         <div className="flex flex-col divide-y divide-gray-200 rounded-xl border border-gray-100 bg-white px-5 shadow-sm">
@@ -93,6 +94,7 @@ const MainNews = ({ articles }: MainNewsProps) => {
               className="group flex flex-col gap-4 py-5 sm:flex-row"
             >
               {/* News Details */}
+            <Link href={`/newsdetails/${article.id}`}>
               <div className="flex min-w-0 flex-1 flex-col justify-center">
                 <span className="mb-2 text-sm font-semibold text-red-600">
                   {article.category}
@@ -121,7 +123,7 @@ const MainNews = ({ articles }: MainNewsProps) => {
 
                   <time>{article.lastPublished}</time>
                 </div>
-              </div>
+              </div></Link>
             </article>
           ))}
         </div>

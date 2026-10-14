@@ -9,6 +9,7 @@ interface NavProps {
   scrapable: boolean;
 }
 
+
 const NavLink = async () => {
   const resdata = await fetch(
     "https://news-api-v2.vercel.app/api/categories",
