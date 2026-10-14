@@ -1,29 +1,53 @@
+"use cache"
 import Link from "next/link";
 import MarqueeText from "react-marquee-text";
 import "react-marquee-text/dist/styles.css";
-export const instant = false;
+
+export const dynamic = "force-dynamic";
 
 interface Headline {
-  id: string;
+  id: string | number;
   title: string;
 }
 
-const Marquee = async () => {
-  const res = await fetch("https://news-api-v2.vercel.app/api/news?limit=10");
+const getHeadlines = async (): Promise<Headline[]> => {
+  const res = await fetch(
+    "https://news-api-v2.vercel.app/api/news?limit=10"
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch headlines");
+  }
+
   const data = await res.json();
-  const headLines: Headline[] = data.data;
+
+  return data.data;
+};
+
+const Marquee = async () => {
+  const headLines = await getHeadlines();
+
   return (
-    <div className="flex bg-red-800">
-      <div className="  text-white flex items-center container mx-auto">
-        <div className="bg-red-900 text-white py-3 px-5">সর্বশেষ</div>
-        <MarqueeText direction="right" duration={10}>
-          {headLines.map((headline) => (
-            <Link href={`/newsdetails/${headline.id}`} key={headline.id}>
-              {headline.title}
-              <span className="px-5">●</span>
-            </Link>
-          ))}
-        </MarqueeText>
+    <div className="bg-red-800">
+      <div className="container mx-auto flex items-center text-white">
+        <div className="shrink-0 bg-red-900 px-5 py-3 font-bold">
+          সর্বশেষ
+        </div>
+
+        <div className="min-w-0 flex-1 overflow-hidden py-3">
+          <MarqueeText direction="right" duration={10}>
+            {headLines.map((headline) => (
+              <Link
+                href={`/newsdetails/${headline.id}`}
+                key={headline.id}
+                className="inline-block hover:text-yellow-300"
+              >
+                {headline.title}
+                <span className="px-5">●</span>
+              </Link>
+            ))}
+          </MarqueeText>
+        </div>
       </div>
     </div>
   );

@@ -1,10 +1,6 @@
-
-
-
+"use cache"
 import Image from "next/image";
 import Link from "next/link";
-
-
 
 interface ArticleBlock {
   type: "text" | "image" | "subheading";
@@ -31,10 +27,7 @@ interface NewsArticle {
 
 async function getNews(id: string): Promise<NewsArticle | null> {
   try {
-    const res = await fetch(
-      `https://news-api-v2.vercel.app/api/article/${id}`,
-      { cache: "no-store" }
-    );
+    const res = await fetch(`https://news-api-v2.vercel.app/api/article/${id}`);
 
     if (!res.ok) return null;
 
@@ -73,9 +66,7 @@ const DetailsPage = async ({
     return (
       <main className="flex min-h-[70vh] items-center justify-center bg-gray-50 px-5">
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-900">
-            News Not Found
-          </h1>
+          <h1 className="text-3xl font-bold text-gray-900">News Not Found</h1>
           <p className="mt-3 text-gray-500">
             The article could not be loaded. Please try again.
           </p>
@@ -90,8 +81,7 @@ const DetailsPage = async ({
     );
   }
 
-  const publishedDate =
-    news.firstPublished || news.lastPublished;
+  const publishedDate = news.firstPublished || news.lastPublished;
 
   return (
     <main className="min-h-screen bg-[#f6f7f9] pb-16">
@@ -102,9 +92,7 @@ const DetailsPage = async ({
             Home
           </Link>
           <span className="mx-2">/</span>
-          <span className="font-medium text-gray-900">
-            News Details
-          </span>
+          <span className="font-medium text-gray-900">News Details</span>
         </div>
       </div>
 
@@ -173,75 +161,70 @@ const DetailsPage = async ({
             <div className="px-5 py-8 sm:px-8 md:px-10 md:py-10">
               <div className="mb-8 border-l-4 border-red-500 pl-4">
                 <p className="text-lg font-medium leading-8 text-gray-700">
-                  {news.text?.split("\n").filter(Boolean)[0] ??
-                    news.title}
+                  {news.text?.split("\n").filter(Boolean)[0] ?? news.title}
                 </p>
               </div>
 
               <div className="space-y-7">
-                {news.body?.length ? (
-                  news.body.map((block, index) => {
-                    if (block.type === "image" && block.url) {
-                      return (
-                        <figure key={index} className="space-y-3">
-                          <div className="relative aspect-[16/9] overflow-hidden rounded-xl bg-gray-100">
-                            <Image
-                              src={block.url}
-                              alt={block.caption || news.title}
-                              fill
-                              sizes="(max-width: 768px) 100vw, 900px"
-                              className="object-cover"
-                            />
-                          </div>
+                {news.body?.length
+                  ? news.body.map((block, index) => {
+                      if (block.type === "image" && block.url) {
+                        return (
+                          <figure key={index} className="space-y-3">
+                            <div className="relative aspect-[16/9] overflow-hidden rounded-xl bg-gray-100">
+                              <Image
+                                src={block.url}
+                                alt={block.caption || news.title}
+                                fill
+                                sizes="(max-width: 768px) 100vw, 900px"
+                                className="object-cover"
+                              />
+                            </div>
 
-                          {block.caption && (
-                            <figcaption className="text-sm leading-6 text-gray-500">
-                              {block.caption}
-                            </figcaption>
-                          )}
-                        </figure>
-                      );
-                    }
+                            {block.caption && (
+                              <figcaption className="text-sm leading-6 text-gray-500">
+                                {block.caption}
+                              </figcaption>
+                            )}
+                          </figure>
+                        );
+                      }
 
-                    if (
-                      block.type === "subheading" &&
-                      block.text
-                    ) {
-                      return (
-                        <h2
-                          key={index}
-                          className="border-b border-gray-200 pb-3 pt-3 text-2xl font-bold leading-snug text-gray-900"
-                        >
-                          {block.text}
-                        </h2>
-                      );
-                    }
+                      if (block.type === "subheading" && block.text) {
+                        return (
+                          <h2
+                            key={index}
+                            className="border-b border-gray-200 pb-3 pt-3 text-2xl font-bold leading-snug text-gray-900"
+                          >
+                            {block.text}
+                          </h2>
+                        );
+                      }
 
-                    if (block.type === "text" && block.text) {
-                      return (
+                      if (block.type === "text" && block.text) {
+                        return (
+                          <p
+                            key={index}
+                            className="text-base leading-8 text-gray-700 sm:text-lg sm:leading-9"
+                          >
+                            {block.text}
+                          </p>
+                        );
+                      }
+
+                      return null;
+                    })
+                  : (news.text ?? "")
+                      .split("\n")
+                      .filter(Boolean)
+                      .map((paragraph, index) => (
                         <p
                           key={index}
                           className="text-base leading-8 text-gray-700 sm:text-lg sm:leading-9"
                         >
-                          {block.text}
+                          {paragraph}
                         </p>
-                      );
-                    }
-
-                    return null;
-                  })
-                ) : (
-                  (news.text ?? "").split("\n").filter(Boolean).map(
-                    (paragraph, index) => (
-                      <p
-                        key={index}
-                        className="text-base leading-8 text-gray-700 sm:text-lg sm:leading-9"
-                      >
-                        {paragraph}
-                      </p>
-                    )
-                  )
-                )}
+                      ))}
               </div>
 
               {/* Footer */}
@@ -322,8 +305,8 @@ const DetailsPage = async ({
                 Read the full story. Understand the context.
               </h2>
               <p className="mt-3 text-sm leading-6 text-gray-300">
-                Explore the original report for more details and
-                updates from the publisher.
+                Explore the original report for more details and updates from
+                the publisher.
               </p>
 
               {(news.sourceUrl || news.link) && (

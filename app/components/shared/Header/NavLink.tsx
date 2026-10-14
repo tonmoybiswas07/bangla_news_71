@@ -1,6 +1,6 @@
-
+"use cache";
 import Link from "next/link";
-export const instant = false
+export const instant = false;
 interface NavProps {
   slug: string;
   title: string;
@@ -9,14 +9,8 @@ interface NavProps {
   scrapable: boolean;
 }
 
-
 const NavLink = async () => {
-  const resdata = await fetch(
-    "https://news-api-v2.vercel.app/api/categories",
-    {
-      cache: "no-store",
-    }
-  );
+  const resdata = await fetch("https://news-api-v2.vercel.app/api/categories");
 
   if (!resdata.ok) {
     throw new Error("Failed to fetch news categories");
@@ -32,7 +26,7 @@ const NavLink = async () => {
       <Link href="/">হোম</Link>
 
       {filteredNavs.map((nav) => (
-      <Link key={nav.slug} href={`/category/${nav.slug}`}>
+        <Link key={nav.slug} href={`/category/${nav.slug}`}>
           {nav.title}
         </Link>
       ))}
